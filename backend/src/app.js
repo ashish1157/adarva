@@ -7,6 +7,11 @@ const jobRoutes = require('./routes/job.routes.js');
 
 const app = express();
 
+app.use(cors({
+  origin: process.env.REACT_APP_API_URL,
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
