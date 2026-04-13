@@ -7,28 +7,61 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
-    e.preventDefault();
-    await api.post("/auth/signup", form);
-    navigate("/");
+    e.preventDefault(); // prevents page reload
+
+    try {
+      const res = await api.post("/auth/signup", form);
+
+      console.log("SIGNUP RESPONSE:", res.data);
+
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      alert("Signup failed");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-80">
-        <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
+      <form
+        onSubmit={handleSignup}
+        className="bg-white p-8 rounded shadow w-80"
+        
+      >
+        <h2 className="text-xl mb-4">Signup</h2>
+        
+        <input
+          className="w-full p-2 mb-3 border"
+          placeholder="Name"
+          onChange={(e) =>
+            setForm({ ...form, name: e.target.value })
+          }
+        />
 
-        <input className="input" placeholder="Name"
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <input className="input" placeholder="Email"
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <input type="password" className="input" placeholder="Password"
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        <input
+          className="w-full p-2 mb-3 border"
+          placeholder="Email"
+          onChange={(e) =>
+            setForm({ ...form, email: e.target.value })
+          }
         />
 
-        <button className="btn-green">Signup</button>
-      </div>
+        <input
+          type="password"
+          className="w-full p-2 mb-3 border"
+          placeholder="Password"
+          onChange={(e) =>
+            setForm({ ...form, password: e.target.value })
+          }
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2"
+        >
+          Signup
+        </button>
+      </form>
     </div>
   );
 }
