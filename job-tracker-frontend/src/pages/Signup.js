@@ -9,11 +9,11 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError(''); // ✅ clear previous error
+    setError(''); 
 
     try {
       const res = await api.post("/auth/signup", form);
-      console.log("SIGNUP RESPONSE:", res.data);
+      //console.log("SIGNUP RESPONSE:", res.data);
       navigate("/");
     } catch (err) {
       const message = err.response?.data?.error || 'Something went wrong';
