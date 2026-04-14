@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault(); // prevents page reload
+    setError('');
 
     try {
       const res = await api.post("/auth/login", form);
@@ -17,16 +19,16 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      console.log(err);
-      alert("Login failed");
-    }
+        const message = err.response?.data?.error || 'Something went wrong';
+        setError(message);
+      }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-8 rounded shadow w-80"
+        className="bg-white p-8 rounded shadow w-81"
         
       >
         <h2 className="text-xl mb-4">Login</h2>
@@ -47,6 +49,10 @@ export default function Login() {
             setForm({ ...form, password: e.target.value })
           }
         />
+
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+        )}
 
         <button
           type="submit"

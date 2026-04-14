@@ -12,10 +12,10 @@ exports.signup = async (name, email, password) => {
 
 exports.login = async (email, password) => {
   const user = await userRepo.findByEmail(email);
-  if (!user) throw new Error('User not found');
+  if (!user) throw new Error('No account found with this email. Please signup!');
 
   const isValid = await comparePassword(password, user.password);
-  if (!isValid) throw new Error('Invalid credentials');
+  if (!isValid) throw new Error('Wrong password. Please try again!');
 
   const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET);
   return token;

@@ -1,9 +1,9 @@
 const jobRepo = require('../repositories/job.repository');
 
-exports.createJob = (title, company) => {
-  return jobRepo.createJob(title, company);
+exports.createJob = (title, company, userid) => {
+  return jobRepo.createJob(title, company, userid);
 };
 
-exports.getJobs = () => {
-  return jobRepo.getJobs();
+exports.getJobs = (userid) => {
+  return jobRepo.getJobs(userid);
 };

@@ -3,7 +3,7 @@ const jobService = require('../services/job.service');
 exports.createJob = async (req, res) => {
   try {
     const { title, company } = req.body;
-    const id = await jobService.createJob(title, company);
+    const id = await jobService.createJob(title, company, req.userid);
     res.status(201).json({ id });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -12,7 +12,7 @@ exports.createJob = async (req, res) => {
 
 exports.getJobs = async (req, res) => {
   try {
-    const jobs = await jobService.getJobs();
+    const jobs = await jobService.getJobs(req.userid);
     res.json(jobs);
   } catch (err) {
     res.status(500).json({ error: err.message });
