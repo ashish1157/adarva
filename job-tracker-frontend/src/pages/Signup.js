@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [error, setError] = useState(''); // ✅ added
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -12,12 +12,12 @@ export default function Signup() {
     setError(''); 
 
     try {
-      const res = await api.post("/auth/signup", form);
+      await api.post("/auth/signup", form);
       //console.log("SIGNUP RESPONSE:", res.data);
       navigate("/");
     } catch (err) {
       const message = err.response?.data?.error || 'Something went wrong';
-      setError(message); // ✅ set error instead of alert
+      setError(message);
     }
   };
 
